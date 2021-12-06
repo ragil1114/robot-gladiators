@@ -135,5 +135,5 @@ var endGame = function() {
 }
 
 
-    // Call: start the game when the page loads [for startGame() function]
+    // Call: restart the game for endGame() function
 startGame();
