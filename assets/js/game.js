@@ -15,8 +15,8 @@ var enemyAttack = 12;
 // "LOSE" - Player robot's health is zero or less
 
     // function to generate a random numeric value
-var randomNumber = function() {
-    var value = Math.floor(Math.random() * 21) + 40;
+var randomNumber = function(min, max) {
+    var value = Math.floor(Math.random() * (max - min + 1) + min);
   
     return value;
 };
@@ -43,8 +43,9 @@ var fight = function(enemyName) {
                         break;
                     }
             }
-                    // Math Object: Subtract the value of `playerAttack` from the value of `enemyHealth` and use that result to update the value in the `enemyHealth` variable.
-                enemyHealth = Math.max(0, enemyHealth - playerAttack);
+                    // generate random damage value based on player's attack power
+                var damage = randomNumber(playerAttack - 3, playerAttack);
+                enemyHealth = Math.max(0, enemyHealth - damage);
 
                     // Log a resulting message to the console so we know that it worked.
                 console.log(
@@ -63,8 +64,10 @@ var fight = function(enemyName) {
                     window.alert(enemyName + " still has " + enemyHealth + " health left.");
                 }
 
-                    // Math Object: Subtract the value of `enemyAttack` from the value of `playerHealth` and use that result to update the value in the `playerHealth` variable.
-                playerHealth = Math.max(0, playerHealth - enemyAttack);
+                    // generate random damage value based on enemy's attack power
+                var damage = randomNumber(enemyAttack - 3, enemyAttack);
+                    // Math Object: Subtract the value of ^damage^ from the value of `playerHealth` and use that result to update the value in the `playerHealth` variable.
+                playerHealth = Math.max(0, playerHealth - damage);
 
                     // Log a resulting message to the console so we know that it worked.
                 console.log(
@@ -103,8 +106,8 @@ var startGame = function() {
                 // pick new enemy to fight based on the index of the enemyNames array
             var pickedEnemyName = enemyNames[i];
 
-                // Two Math Objects listed here to reset (randomly yet rounding down to nearest whole #) enemyHealth before starting new fight.
-            enemyHealth = Math.floor(Math.random() * 21) + 40;
+                // Math Object listed here to reset (randomly yet rounding down to nearest whole #) enemyHealth before starting new fight.
+            enemyHealth = randomNumber(40, 60);
 
                 // pass the pickedEnemyName variable's value into the fight function, where it will assume the value of the enemyName parameter
             fight(pickedEnemyName);
@@ -158,7 +161,7 @@ var shop = function() {
     "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
   );
 
-        // use switch statement to carry out action
+        // use Switch Statement to carry out action
     switch (shopOptionPrompt) {
         case "REFILL": // new case
         case "refill":
