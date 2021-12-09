@@ -78,12 +78,10 @@ var fight = function(enemy) {
     // function to start a new game
 var startGame = function() {
       // reset player stats
-  playerInfo.health = 100;
-  playerInfo.attack = 10;
-  playerInfo.money = 10;
+    playerInfo.reset();
 
         // Call: function w/in a for Loop allowing player to fight all enemy robots.
-    for (var i = 0; i < enemyInfo.length; i++) {
+    for (var i = 0; i < enemyInfo.length; i++) {        // 'i++' OR 'i = i + 1'
         if (playerInfo.health > 0) {
                 // let player know what round they are in, remember that arrays start at 0 so it needs to have 1 added to it
             window.alert("Welcome to Robot Gladiators! Round " + (i + 1));
@@ -145,49 +143,27 @@ var shop = function() {
   var shopOptionPrompt = window.prompt(
     "Would you like to REFILL your health, UPGRADE your attack, or LEAVE the store? Please enter one: 'REFILL', 'UPGRADE', or 'LEAVE' to make a choice."
   );
-
         // use Switch Statement to carry out action
     switch (shopOptionPrompt) {
-        case "REFILL": // new case
+        case "REFILL":
         case "refill":
-            if (playerInfo.money >= 7) {
-                window.alert("Refilling player's health by 20 for 7 dollars.");
-            
-                    // increase health and decrease money
-                playerInfo.health = playerInfo.health + 20;
-                playerInfo.money = playerInfo.money - 7;
-            }
-            else {
-                window.alert("You don't have enough money!");
-            }
-            
+            playerInfo.refillHealth();
         break;
-        
-        case "UPGRADE": // new case
+            
+        case "UPGRADE":
         case "upgrade":
-            if (playerInfo.money >= 7) {
-                window.alert("Upgrading player's attack by 6 for 7 dollars.");
-
-                    // increase attack and decrease money
-                playerInfo.attack = playerInfo.attack + 6;
-                playerInfo.money = playerInfo.money - 7;
-            }
-            else {
-                window.alert("You don't have enough money!");
-            }
-
+            playerInfo.upgradeAttack();
         break;
         
-        case "LEAVE": // new case
+        case "LEAVE":
         case "leave":
-        window.alert("Leaving the store.");
-            // do nothing, so function will end
+            window.alert("Leaving the store.");
         break;
 
         default:
-        window.alert("You did not pick a valid option. Try again.");
-            // call shop() again to force player to pick a valid option
-        shop();
+            window.alert("You did not pick a valid option. Try again.");
+                // call shop() again to force player to pick a valid option
+            shop();
         break;
     }
 };
@@ -199,10 +175,30 @@ var playerInfo = {
     health: 100,
     attack: 10,
     money: 10,
-    reset: function() {
-        this.health = 100;
+    reset: function() {     // Object Method
+        this.health = 100;  // 'this' allows access to all of the object's properties & methods
         this.money = 10;
         this.attack = 10;
+    },                      // Comma used to separate Object Methods.
+    refillHealth: function() {
+        if (this.money >= 7) {      // Conditional logic taken from the Switch statement & placed here.
+          window.alert("Refilling player's health by 20 for 7 dollars.");
+          this.health += 20;
+          this.money -= 7;
+        } 
+        else {
+          window.alert("You don't have enough money!");
+        }
+    },
+    upgradeAttack: function() {
+        if (this.money >= 7) {
+          window.alert("Upgrading player's attack by 6 for 7 dollars.");
+          this.attack += 6;
+          this.money -= 7;
+        } 
+        else {
+          window.alert("You don't have enough money!");
+        }
     }
   };
 
@@ -223,5 +219,5 @@ var enemyInfo = [
 ];
 
 
-    // Call: restart the game for endGame() function
+    // Call to restart the game for endGame() function.
 startGame();
